@@ -70,6 +70,20 @@ const pomodoroTodo = (state=[] , action: any) => {
     }
 }
 
+const pomodoroChecklist = (state = [] , action : any) => {
+    switch(action.type) {
+        case 'ADD_POMODORO_CHECKLIST' : 
+            return [...state , {
+                id: action.id ,
+                title: action.title ,
+                checklist: action.checklist,
+            }]
+
+        default : 
+            return state
+    }
+}
+
 export const allReducer = combineReducers({
     
     // depracated 
@@ -79,5 +93,6 @@ export const allReducer = combineReducers({
     notes ,
     checklist,
     showTodo , 
-    pomodoroTodo
+    pomodoroTodo , 
+    pomodoroChecklist
 })

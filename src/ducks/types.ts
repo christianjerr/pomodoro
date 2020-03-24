@@ -1,4 +1,4 @@
-export type todoItemTypes =[ {
+export type todoItemTypes = [{
     id: number,
     text: string,
     completed: boolean
@@ -9,23 +9,30 @@ export type InputValueInitialState = {
 }
 
 export type deconstructedItems = {
-    todos : [{
+    
+    todos?: [{
         id: number,
         text: string,
         completed: boolean,
     }],
+    
     dispatch?: any,
     notes?: boolean | undefined,
     checklist?: boolean | undefined
     showTodo?: boolean | undefined
-    pomodoroTodo?: pomodoroTodoPayloadType
+    
+    pomodoroTodo?: [{
+        id?: number , 
+        title : string | undefined , 
+        noteValue : string | undefined
+    }]
 }
 
-export type pomodoroTodoPayloadType = {
+export type pomodoroTodoPayloadType = [{
     id?: number , 
     title : string | undefined , 
     noteValue : string | undefined
-}
+}]
 
 export type pomodoIndividualItemTypes = {
     pomodoroTodo?:{id?: number , 

@@ -56,9 +56,16 @@ export const activateShowTodo = (payload: boolean) => ({
 
 
 
-export const addPomodoroTodo = (payload : pomodoroTodoPayloadType) => ({
+export const addPomodoroTodo = (payload : any) => ({
     type : 'ADD_POMODORO_TODO' ,
     id :  randomNumber++,
     title : payload.title , 
     noteValue: payload.noteValue
+})
+
+export const addPomodoroCheckList = (payload: any) => ({
+    type : 'ADD_POMODORO_CHECKLIST' ,
+    id: randomNumber++,
+    title: payload.title,
+    checklist: payload.checklist
 })

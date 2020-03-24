@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { activateNotes , activateChecklist, activateShowTodo, addPomodoroTodo } from '../ducks/actions'
+import { activateNotes , activateChecklist, activateShowTodo, addPomodoroTodo, addPomodoroCheckList } from '../ducks/actions'
 import { connect } from 'react-redux'
 import { store } from '../ducks/store'
 import * as style from './styles'
@@ -15,6 +15,10 @@ const PomodoroMainContainer: React.FC<PomodoroMainType> = ({notes , checklist , 
     let noteTitle: HTMLInputElement | null ;
     let noteValue: HTMLTextAreaElement | null
     let noteformReference: HTMLFormElement | null;
+
+    let checklistTitle : HTMLInputElement | null ;
+    let checklistContent : HTMLInputElement | null ;
+    let checklistFormReference: HTMLFormElement | null;
 
 
     const handleNotesClick = () => {
@@ -46,11 +50,23 @@ const PomodoroMainContainer: React.FC<PomodoroMainType> = ({notes , checklist , 
             noteformReference?.reset()
         }
         console.log(store.getState())
+    }  
+
+
+    const handleCheckListSubmit = (e : React.FormEvent<HTMLFormElement>) =>{
+        e.preventDefault()
+        if(!checklistTitle?.value.trim() && !checklistContent?.value.trim()){
+            return
+        }else {
+            dispatch(addPomodoroCheckList({title: checklistTitle?.value , checklist : checklistContent?.value}))
+            checklistFormReference?.reset()
+            console.log(store.getState())
+        }
     }
 
     return (
         <>
-            <div>
+            <div style={{background: '#ccc' , padding: '0 10px'}}>
                
                 {
                     showTodo && 
@@ -73,10 +89,11 @@ const PomodoroMainContainer: React.FC<PomodoroMainType> = ({notes , checklist , 
                         
                         : checklist  &&
                         
-                        <form>
-                            <input placeholder='Title'/>
-                            <input placeholder='Check List item'/><span><button>Add Item</button></span>
-                            <p><button>Save</button></p>
+                        <form onSubmit={(e) => handleCheckListSubmit(e)} ref={element => {checklistFormReference = element}}>
+                            <input placeholder='Title' ref={element => {checklistTitle = element}}/>
+                            <input placeholder='Check List item' ref = {element => {checklistContent = element}}/>
+                            <span><button>Add Item</button></span>
+                            <p><button type='submit'>Save</button></p>
                         </form>
                         }
                     </div>

@@ -16,3 +16,9 @@ export const Margin = styled.div<margin>`
     margin-left: ${props => props.marginLeft};
     margin-right: ${props => props.marginRight};
 `
+export const TodoItemContainer = styled.ul<margin>`
+    margin-bottom : ${props => props.marginBottom};
+    padding: 5px;
+    background: #ccc;
+    color : gray;
+`

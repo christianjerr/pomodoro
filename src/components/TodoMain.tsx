@@ -19,7 +19,7 @@ const TodoMain:React.FC<types.deconstructedItems> = ({todos,dispatch}) => {
 
     return (
         <>
-                {todos.map((i) => (
+                {todos?.map((i) => (
                     <ul key={i.id}>
                         <li><span style={{color: i.completed ? 'green' : 'red'}}>{i.text}</span></li>
                         <li>
