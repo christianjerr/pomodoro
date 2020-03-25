@@ -53,14 +53,26 @@ export const activateShowTodo = (payload: boolean) => ({
     payload: payload
 })
 
-
-
-
 export const addPomodoroTodo = (payload : any) => ({
     type : 'ADD_POMODORO_TODO' ,
     id :  randomNumber++,
     title : payload.title , 
     noteValue: payload.noteValue
+})
+
+export const addPomodoroChecklistItem = (payload:any) => ({
+    type : 'ADD_POMODORO_CHECKLIST_ITEMS' ,
+    id: randomNumber++ ,
+    checklistItem: payload.checklistItem
+})
+export const removePomodoroChecklistItem = () => ({
+    type : 'SPREADING_POMODORO_ITEMS' 
+})
+export const addItemsSample = (payload:any) => ({
+    type : 'ADD_POMODORO_ITEMS' ,
+    id: randomNumber++ ,
+    checklist: payload.checklist,
+    title: payload.title
 })
 
 export const addPomodoroCheckList = (payload: any) => ({
@@ -69,3 +81,5 @@ export const addPomodoroCheckList = (payload: any) => ({
     title: payload.title,
     checklist: payload.checklist
 })
+
+

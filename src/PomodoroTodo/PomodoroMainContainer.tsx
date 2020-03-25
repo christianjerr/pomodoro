@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { activateNotes , activateChecklist, activateShowTodo, addPomodoroTodo, addPomodoroCheckList } from '../ducks/actions'
+import { activateNotes , activateChecklist, activateShowTodo, addPomodoroTodo, addPomodoroCheckList, addPomodoroChecklistItem, addItemsSample, removePomodoroChecklistItem } from '../ducks/actions'
 import { connect } from 'react-redux'
 import { store } from '../ducks/store'
 import * as style from './styles'
@@ -49,24 +49,34 @@ const PomodoroMainContainer: React.FC<PomodoroMainType> = ({notes , checklist , 
             dispatch(addPomodoroTodo({title: noteTitle?.value , noteValue: noteValue?.value }))
             noteformReference?.reset()
         }
-        console.log(store.getState())
+        dispatch(activateShowTodo(false))
     }  
 
 
     const handleCheckListSubmit = (e : React.FormEvent<HTMLFormElement>) =>{
+        
+       
         e.preventDefault()
         if(!checklistTitle?.value.trim() && !checklistContent?.value.trim()){
             return
         }else {
-            dispatch(addPomodoroCheckList({title: checklistTitle?.value , checklist : checklistContent?.value}))
+            dispatch(addPomodoroCheckList({title: checklistTitle?.value , checklist:checklistContent?.value }))
             checklistFormReference?.reset()
             console.log(store.getState())
+            // dispatch(removePomodoroChecklistItem())
         }
+        dispatch(activateShowTodo(false))
+    }
+
+    const handleAddItem = () => {
+        dispatch(addPomodoroChecklistItem({checklistItem : checklistContent?.value}))
+        // dispatch(addItemsSample({checklist : checklistContent?.value , title: checklistTitle?.value}))
+        console.log(store.getState())
     }
 
     return (
         <>
-            <div style={{background: '#ccc' , padding: '0 10px'}}>
+            <div style={{background: '#83B8ff' , padding: '0 10px'}}>
                
                 {
                     showTodo && 
@@ -88,11 +98,11 @@ const PomodoroMainContainer: React.FC<PomodoroMainType> = ({notes , checklist , 
                         </form>
                         
                         : checklist  &&
-                        
                         <form onSubmit={(e) => handleCheckListSubmit(e)} ref={element => {checklistFormReference = element}}>
                             <input placeholder='Title' ref={element => {checklistTitle = element}}/>
+                            
                             <input placeholder='Check List item' ref = {element => {checklistContent = element}}/>
-                            <span><button>Add Item</button></span>
+                            {/* <span><button onClick={handleAddItem} type='button'>Add Item</button></span> */}
                             <p><button type='submit'>Save</button></p>
                         </form>
                         }

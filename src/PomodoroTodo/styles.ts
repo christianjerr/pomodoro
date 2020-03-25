@@ -7,7 +7,8 @@ type margin = {
     marginRight? : string
 }
 
-export const BtnContainer = styled.ul`
+export const BtnContainer = styled.ul<margin>`
+    margin-top : ${props => props.marginTop};
     li {display: inline-block};
 `
 export const Margin = styled.div<margin>`
@@ -18,7 +19,8 @@ export const Margin = styled.div<margin>`
 `
 export const TodoItemContainer = styled.ul<margin>`
     margin-bottom : ${props => props.marginBottom};
-    padding: 5px;
-    background: #ccc;
-    color : gray;
+    padding: 10px;
+    background: #83B8ff;
+    color: #fff;
+    font-size: 20px;
 `

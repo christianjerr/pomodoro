@@ -70,12 +70,30 @@ const pomodoroTodo = (state=[] , action: any) => {
     }
 }
 
+const pomodoroChecklistItems = (state = [] , action: any) => {
+    switch(action.type){
+        case 'ADD_POMODORO_CHECKLIST_ITEMS' :
+            return [...state , {
+                checklistItem : action.checklistItem
+            }]
+        case 'SPREADING_POMODORO_ITEMS' : 
+            return [...state , {
+                checklistItem : action.checklistItem
+            }]
+        default: 
+            return state
+    }
+}
+
+
+// needed to put pomodoroChecklistItems to pomodoroChecklist props
+
 const pomodoroChecklist = (state = [] , action : any) => {
     switch(action.type) {
         case 'ADD_POMODORO_CHECKLIST' : 
             return [...state , {
                 id: action.id ,
-                title: action.title ,
+                title: action.title,
                 checklist: action.checklist,
             }]
 
@@ -89,10 +107,10 @@ export const allReducer = combineReducers({
     // depracated 
     todos , 
 
-
     notes ,
     checklist,
     showTodo , 
     pomodoroTodo , 
-    pomodoroChecklist
+    pomodoroChecklist,
+    pomodoroChecklistItems
 })

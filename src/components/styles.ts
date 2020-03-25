@@ -10,13 +10,12 @@ type formType = {
     background: string;
 }
 export const Button = styled.button`
-    padding: 15px 50px;
+    padding: 10px 45px;
     border: none;
-    border-radius: 12px;
+    border-radius: 5px;
     background-color: #83B8ff;
     color: #FFF;
-    font-size: 30px;
-    font-weight: bold;
+    font-size: 25px;
 
     &:hover { 
         background-color: #248BD6;
@@ -52,7 +51,7 @@ export const Number = styled.div`
     padding: 20px 0;
     color: #83B8ff;
     font-size: 200px;
-    font-weight: bold;
+    
     
 `
 export const Margin = styled.div<marginTypes>`

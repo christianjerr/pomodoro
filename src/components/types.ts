@@ -1,4 +1,4 @@
-import { pomodoroTodoPayloadType } from "../ducks/types"
+import { pomodoroTodoPayloadType , pomodoroChecklistType, pomodoroCheckListItemType } from "../ducks/types"
 
 export type timersType = {
     pomodoro: any ,
@@ -23,6 +23,9 @@ export type StateAll = {
     notes: boolean ,
     checklist: boolean , 
     showTodo : boolean , 
-    pomodoroTodo: pomodoroTodoPayloadType
+    pomodoroTodo: pomodoroTodoPayloadType , 
+    pomodoroChecklist : pomodoroChecklistType,
+    checkListTitle: string,
+    pomodoroChecklistItems : pomodoroCheckListItemType
 }
 

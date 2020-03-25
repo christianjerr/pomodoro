@@ -12,7 +12,15 @@ import PomodoroTodoItems from './PomodoroTodo/PomodoroTodoItems';
 
 let countdown: number;
 
-const App = ({todos , notes , checklist , showTodo , pomodoroTodo } : deconstructedItems) => {
+const App = ({
+  todos , 
+  notes , 
+  checklist , 
+  showTodo , 
+  pomodoroTodo,
+  pomodoroChecklist,
+  pomodoroChecklistItems
+} : deconstructedItems) => {
 
   const [minutesDisplay , setMinutes] = useState<string>()
   const [reset , setReset ] = useState<string>('')
@@ -184,7 +192,7 @@ const App = ({todos , notes , checklist , showTodo , pomodoroTodo } : deconstruc
       <AddTodo />
       <TodoMain todos={todos}/></span>
       </div>
-      <PomodoroTodoItems pomodoroTodo={pomodoroTodo}/>
+      <PomodoroTodoItems pomodoroTodo={pomodoroTodo} pomodoroChecklist={pomodoroChecklist} pomodoroChecklistItems={pomodoroChecklistItems}/>
       <PomodoroMainContainer notes={notes} checklist={checklist} showTodo={showTodo}/>
     </Style.MainContainer>
   );
@@ -195,7 +203,9 @@ const mapStateToProps = (state: StateAll) => ({
   notes: state.notes ,
   checklist: state.checklist ,
   showTodo: state.showTodo,
-  pomodoroTodo:  state.pomodoroTodo
+  pomodoroTodo:  state.pomodoroTodo , 
+  pomodoroChecklist: state.pomodoroChecklist,
+  pomodoroChecklistItems: state.pomodoroChecklistItems
 })
 
 export default connect(mapStateToProps)(App);

@@ -26,12 +26,32 @@ export type deconstructedItems = {
         title : string | undefined , 
         noteValue : string | undefined
     }]
+
+    pomodoroChecklist?: [{
+        id: number ,
+        title: string ,
+        checklist: any,
+    }]
+
+    pomodoroChecklistItems?: [{
+        checklistItem: string
+    }]
 }
 
 export type pomodoroTodoPayloadType = [{
     id?: number , 
     title : string | undefined , 
     noteValue : string | undefined
+}]
+
+export type pomodoroChecklistType = [{
+    id: number ,
+    title: string ,
+    checklist: string,
+}]
+
+export type pomodoroCheckListItemType = [{
+    checklistItem: string
 }]
 
 export type pomodoIndividualItemTypes = {
