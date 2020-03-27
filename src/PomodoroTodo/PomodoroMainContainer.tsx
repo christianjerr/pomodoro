@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { activateNotes , activateChecklist, activateShowTodo, addPomodoroTodo, addPomodoroCheckList, addPomodoroChecklistItem, addItemsSample, removePomodoroChecklistItem } from '../ducks/actions'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import { store } from '../ducks/store'
 import * as style from './styles'
+import * as actions from '../ducks/actions'
+import {Button}from './styles'
+
 type PomodoroMainType = {
     notes: boolean | undefined,
     checklist: boolean | undefined , 
@@ -62,20 +65,37 @@ const PomodoroMainContainer: React.FC<PomodoroMainType> = ({notes , checklist , 
         }else {
             dispatch(addPomodoroCheckList({title: checklistTitle?.value , checklist:checklistContent?.value }))
             checklistFormReference?.reset()
-            console.log(store.getState())
-            // dispatch(removePomodoroChecklistItem())
         }
         dispatch(activateShowTodo(false))
     }
 
-    const handleAddItem = () => {
-        dispatch(addPomodoroChecklistItem({checklistItem : checklistContent?.value}))
-        // dispatch(addItemsSample({checklist : checklistContent?.value , title: checklistTitle?.value}))
+
+    const items: string[] = []
+    const text : string =''
+    const title: string = ''
+    const [todoitem , setTodoItem] = useState({
+        items,
+        text,
+        title
+    })
+
+    const dispatchState = useDispatch()
+    
+    const addItems = () => {  
+        setTodoItem({...todoitem , items : [...todoitem.items ,todoitem.text]})
+    }
+
+
+    const handleSubmit = () => {
+        dispatchState(actions.addChecklistItem({title: todoitem.title , listItem: todoitem.items , text: todoitem.text}))
+        setTodoItem({...todoitem , items : items , text : todoitem.text , title : todoitem.title})
         console.log(store.getState())
     }
 
+
     return (
         <>
+            
             <div style={{background: '#83B8ff' , padding: '0 10px'}}>
                
                 {
@@ -98,21 +118,28 @@ const PomodoroMainContainer: React.FC<PomodoroMainType> = ({notes , checklist , 
                         </form>
                         
                         : checklist  &&
-                        <form onSubmit={(e) => handleCheckListSubmit(e)} ref={element => {checklistFormReference = element}}>
-                            <input placeholder='Title' ref={element => {checklistTitle = element}}/>
-                            
-                            <input placeholder='Check List item' ref = {element => {checklistContent = element}}/>
-                            {/* <span><button onClick={handleAddItem} type='button'>Add Item</button></span> */}
-                            <p><button type='submit'>Save</button></p>
-                        </form>
+                        <>
+                        <ul style={{padding: '20px 0'}}>
+                            <li><input placeholder='title'  onChange={(e) => setTodoItem({...todoitem , title : e.target.value })} required/></li>
+                            <li><input placeholder='item' onChange={(e) => setTodoItem({...todoitem , text : e.target.value})} required/></li>
+                            <br/>
+                            <button onClick={addItems}>Add Item</button>
+                            <button onClick={handleSubmit}>submit</button>
+                         </ul>
+
+                         {todoitem.items.map((item , index) => (
+                                <ul style={{color : '#fff'}} key={index}>
+                                    <li><input type='checkbox'/>{item}</li>
+                                </ul>
+                            ))}
+                         </>
                         }
                     </div>
                 }
 
             </div>
             
-           
-            <p><button onClick={showAddToDo} >Add To Do</button></p>
+            <p><Button onClick={showAddToDo} >Add To Do</Button></p>
             
         </>
     )

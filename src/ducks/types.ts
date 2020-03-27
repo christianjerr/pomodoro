@@ -36,6 +36,10 @@ export type deconstructedItems = {
     pomodoroChecklistItems?: [{
         checklistItem: string
     }]
+
+    handleStart? : Function
+    handleStop? : Function
+    handleReset? : Function
 }
 
 export type pomodoroTodoPayloadType = [{
@@ -70,3 +74,6 @@ export type actionTypes = {
     text: string,
     completed: boolean
 }
+
+export const ADD_CHECKLIST_ITEM = 'ADD_CHECKLIST_ITEM'
+export const DELETE_CHECKLIST_ITEM = 'DELETE_CHECKLIST_ITEM'

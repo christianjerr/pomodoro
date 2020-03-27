@@ -19,7 +19,8 @@ const App = ({
   showTodo , 
   pomodoroTodo,
   pomodoroChecklist,
-  pomodoroChecklistItems
+  pomodoroChecklistItems,
+  
 } : deconstructedItems) => {
 
   const [minutesDisplay , setMinutes] = useState<string>()
@@ -87,11 +88,20 @@ const App = ({
 
   
 
-  const handleStart = React.useCallback(() => {
+  const handleStart = () => {
+    // clearInterval(countdown)
+    // let remainingTime  = minutesDisplay ?  convert(minutesDisplay) : convert('25:00')
+    // mainTimer(Number(remainingTime))
+    // console.log('start')
+
     clearInterval(countdown)
-    let remainingTime  = minutesDisplay ?  convert(minutesDisplay) : convert('25:00')
-    mainTimer(Number(remainingTime))
-  },[convert, mainTimer, minutesDisplay])
+    timers.pomodoroStatus ? mainTimer(convert(timers.pomodoro+':00')) : 
+    timers.shortBreakStatus ? mainTimer(convert(timers.shortBreak+':00')) :
+    timers.LongBrekStatus ? mainTimer(convert(timers.longBreak+':00')) :
+    timers.LoopStatus ? mainTimer(convert(timers.loop+':00')) : 
+    mainTimer(convert('25:00'))
+  }
+
 
   const handlePause = React.useCallback(() => {
     clearInterval(countdown)
@@ -189,11 +199,20 @@ const App = ({
       <div style={{display: 'none'}}>
       <span style={{display: 'hidden',border: '5px solid red' , padding: '10px'}}>
       <span style={{display: 'hidden' , color: 'maroon'}}>Depricated</span>
-      <AddTodo />
+      
       <TodoMain todos={todos}/></span>
+      <AddTodo />
       </div>
-      <PomodoroTodoItems pomodoroTodo={pomodoroTodo} pomodoroChecklist={pomodoroChecklist} pomodoroChecklistItems={pomodoroChecklistItems}/>
-      <PomodoroMainContainer notes={notes} checklist={checklist} showTodo={showTodo}/>
+     
+      <PomodoroTodoItems 
+        pomodoroTodo={pomodoroTodo} 
+        pomodoroChecklist={pomodoroChecklist} 
+        pomodoroChecklistItems={pomodoroChecklistItems} 
+        handleStart={handleStart}
+        handleStop={handlePause}
+        handleReset={handleReset}
+      />
+       <PomodoroMainContainer notes={notes} checklist={checklist} showTodo={showTodo}/>
     </Style.MainContainer>
   );
 };

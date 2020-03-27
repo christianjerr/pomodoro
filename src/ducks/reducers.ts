@@ -1,7 +1,16 @@
 import {combineReducers} from 'redux'
 import { TodoItemInitialState } from './models'
+import * as types from './types'
+import { pomodoroInitialState } from './models'
 
-// depracated 
+
+
+type pomodorolistType = {
+    id: number ,
+    title : string ,
+    checklist : string
+}
+
 const todos = (state = TodoItemInitialState , action: any) => {    
     switch(action.type){
         case 'ADD_ITEM' : 
@@ -57,7 +66,7 @@ const showTodo = (state = false , action: any) => {
     }
 }
 
-const pomodoroTodo = (state=[] , action: any) => {
+const pomodoroTodo = (state= [] , action: any) => {
     switch(action.type){
         case 'ADD_POMODORO_TODO' : 
             return [...state , {
@@ -65,28 +74,50 @@ const pomodoroTodo = (state=[] , action: any) => {
                 title : action.title , 
                 noteValue: action.noteValue
             }]
+        case 'DELETE_POMODORO_TODO' : 
+            return state.filter((i:pomodorolistType) => i.id !== action.id)
         default :  
             return state
     }
 }
 
-const pomodoroChecklistItems = (state = [] , action: any) => {
+
+const pomodoroReducer = (state:any = pomodoroInitialState , action:any) => {
     switch(action.type){
-        case 'ADD_POMODORO_CHECKLIST_ITEMS' :
-            return [...state , {
-                checklistItem : action.checklistItem
-            }]
-        case 'SPREADING_POMODORO_ITEMS' : 
-            return [...state , {
-                checklistItem : action.checklistItem
-            }]
-        default: 
-            return state
+        case types.ADD_CHECKLIST_ITEM : 
+            state = {
+                pomodoroStore: {
+                ...state.pomodoroStore,
+                todoItems: [
+                    ...state.pomodoroStore.todoItems,
+                    {
+                    id: state.pomodoroStore.todoItems.length + 1,
+                    title: action.title,
+                    listItem: action.listItem,
+                    text : action.text
+                    }
+                ]
+                }
+            };
+            return state;
+        case types.DELETE_CHECKLIST_ITEM : 
+        return state = {
+            pomodoroStore: {
+                ...state.pomodoroStore,
+                todoItems: [
+                    ...state.pomodoroStore.todoItems.filter((i:any) => i.id !== action.id),
+                   
+                ]
+                }
+        }
+            
+        default : 
+          return state
     }
 }
 
 
-// needed to put pomodoroChecklistItems to pomodoroChecklist props
+
 
 const pomodoroChecklist = (state = [] , action : any) => {
     switch(action.type) {
@@ -96,21 +127,19 @@ const pomodoroChecklist = (state = [] , action : any) => {
                 title: action.title,
                 checklist: action.checklist,
             }]
-
+        case 'DELETE_POMODORO_CHECKLIST' : 
+            return state.filter((i:pomodorolistType) => i.id !== action.id)
         default : 
             return state
     }
 }
 
 export const allReducer = combineReducers({
-    
-    // depracated 
     todos , 
-
     notes ,
     checklist,
     showTodo , 
     pomodoroTodo , 
     pomodoroChecklist,
-    pomodoroChecklistItems
+    pomodoroReducer
 })

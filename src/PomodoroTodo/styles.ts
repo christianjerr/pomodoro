@@ -24,3 +24,20 @@ export const TodoItemContainer = styled.ul<margin>`
     color: #fff;
     font-size: 20px;
 `
+export const Button = styled.button`
+    padding: 10px 45px;
+    border: none;
+    border-radius: 5px;
+    background-color: #83B8ff;
+    color: #FFF;
+    font-size: 25px;
+
+    &:hover { 
+        background-color: #248BD6;
+        cursor: pointer;
+    }
+    &:focus {
+        background-color: #248BD6;
+        border-radius: 12px;
+    }
+`

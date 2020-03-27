@@ -1,4 +1,5 @@
 import { pomodoroTodoPayloadType } from "./types"
+import * as types from './types'
 
 // depracated 
 let randomNumber = Math.floor(Math.random() * 1000)
@@ -83,3 +84,30 @@ export const addPomodoroCheckList = (payload: any) => ({
 })
 
 
+export const deletePomodoroChecklist = (payload: any) => ({
+    type: 'DELETE_POMODORO_CHECKLIST',
+    id: payload
+})
+
+export const deletePomodoroNotes = (payload: number | undefined) => ({
+    type: 'DELETE_POMODORO_TODO' ,
+    id : payload
+})
+
+
+type checklistItemPayloadType = {
+    title : string ,
+    listItem: string[],
+    text: string
+}
+export const addChecklistItem  = (payload : checklistItemPayloadType) => ({
+    type : types.ADD_CHECKLIST_ITEM , 
+    title : payload.title ,
+    listItem : payload.listItem,
+    text: payload.text
+})
+
+export const deleteChecklistItem  = (payload : number) => ({
+    type : types.DELETE_CHECKLIST_ITEM , 
+    id : payload
+})
